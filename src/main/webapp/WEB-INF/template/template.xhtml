@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+
+<h:head>
+	<meta charset="UTF-8" />
+	<title><ui:insert name="title">Covid-19 Sledilnik</ui:insert></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</h:head>
+
+<h:body>
+
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#{facesContext.externalContext.applicationContextPath}/faces/vseRegije.xhtml">Covid-19 sledilnik</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li>
+					<a href="#{facesContext.externalContext.applicationContextPath}/faces/vseRegije.xhtml">Regije</a>
+				</li>
+				<!--
+				<li>
+					<a href="#{facesContext.externalContext.applicationContextPath}/faces/dodajRegijo.xhtml">Dodajanje Regije</a>
+				</li>
+				-->
+				<li>
+					<a href="#{facesContext.externalContext.applicationContextPath}/faces/vsiDnevniPodatki.xhtml">Dnevni vnosi</a>
+				</li>
+				<!--
+				<li>
+					<a href="#{facesContext.externalContext.applicationContextPath}/faces/dodajDnevniPodatek.xhtml">Dodajanje DP</a>
+				</li>
+				-->
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container">
+		<ui:insert name="content">
+
+		</ui:insert>
+	</div>
+</h:body>
+
+</html>

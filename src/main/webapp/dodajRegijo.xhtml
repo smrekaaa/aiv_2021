@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="WEB-INF/template/template.xhtml">
+
+    <ui:define name="content">
+        <div class="container">
+            <div class="row mt-3">
+
+                <div class="card card-signin my-5">
+                    <div class="card-body">
+                        <h2 class="text-center display-4 mb-5">Dodaj regijo</h2>
+
+
+                        <h:form>
+                            <div class="form-label ">
+                                <label for="n_naziv">Naziv:</label>
+                                <h:inputText id="n_naziv" class="form-control"
+                                             value="#{moj.novaRegija.naziv}">
+                                    <f:validateRequired/>
+                                </h:inputText> *
+                                <h:message for="n_naziv" style="color:red"/>
+                            </div>
+                            <br/>
+                            <div class="form-label ">
+                                <label for="n_ime">Ime skrbnika:</label>
+                                <h:inputText id="n_ime" class="form-control"
+                                             value="#{moj.novaRegija.imeSkrbnika}">
+                                    <f:validateRequired/>
+                                </h:inputText> *
+                                <h:message for="n_ime" style="color:red"/>
+                            </div>
+                            <br/>
+
+                            <div class="form-label ">
+                                <label for="n_priimek">Priimek skrbnika:</label>
+                                <h:inputText id="n_priimek" class="form-control"
+                                             value="#{moj.novaRegija.priimekSkrbnika}">
+                                    <f:validateRequired/>
+                                </h:inputText> *
+                                <h:message for="n_priimek" style="color:red"/>
+                            </div>
+                            <br/>
+
+                            <div class="form-label ">
+                                <label for="n_email">E-mail:</label>
+                                <h:inputText id="n_email" class="form-control"
+                                             value="#{moj.novaRegija.emailSkrbnika}"
+                                             validatorMessage="Vnesite ustrezen e-mail naslov">
+                                    <f:validateRequired/>
+                                    <f:validateRegex pattern=".+\@.+\..+"/>
+                                </h:inputText> *
+                                <h:message for="n_email" style="color:red"/>
+                            </div>
+                            <br/>
+
+                            <div class="form-label ">
+                                <label for="n_prebivalstvo">Število prebivalcev:</label>
+                                <h:inputText id="n_prebivalstvo" class="form-control"
+                                             value="#{moj.novaRegija.stPrebivalcev}">
+                                    <f:validateRequired/>
+                                    <f:convertNumber integerOnly="true"/>
+                                </h:inputText> *
+                                <h:message for="n_prebivalstvo" style="color:#ff0000"/>
+                            </div>
+                            <br/>
+
+                            <h:commandButton class="btn btn-primary"
+                                    value="Dodaj" actionListener="#{moj.dodajRegijo}"
+                                    action="vseRegije.xhtml"/>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>
+</html>

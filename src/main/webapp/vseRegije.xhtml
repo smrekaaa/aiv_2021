@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core">
+
+
+<ui:composition template="WEB-INF/template/template.xhtml">
+
+    <ui:define name="content">
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col-12">
+                    <h2 class="text-center mt-5 ">Regije </h2>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <h:button class="btn btn-primary"
+                              value="Ustvari regijo"
+                              outcome="dodajRegijo.xhtml"/>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <h:form>
+                    <h:dataTable
+                            class="table table-dark mt-5"
+                            value="#{moj.vseRegije}" var="r" selectionMode="single">
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Regija"/>
+                            </f:facet>
+                            <h:outputText value="#{r.naziv}"/>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Skrbnik"/>
+                            </f:facet>
+                            <h:outputText value="#{r.imeSkrbnika} #{r.priimekSkrbnika}"/>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="E-mail skrbnika"/>
+                            </f:facet>
+                            <h:outputText value="#{r.emailSkrbnika}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Prebivalstvo"/>
+                            </f:facet>
+                            <h:outputText value="#{r.stPrebivalcev}"/>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Dnevni podatki"/>
+                            </f:facet>
+                            <h:commandButton class="btn btn-primary mr-2"
+                                             value="Dodaj" actionListener="#{moj.setIzbranaRegija(r)}"
+                                             action="dodajDnevniPodatek.xhtml"/>
+
+
+                            <h:commandButton class="btn btn-secondary"
+                                             value="Seznam" actionListener="#{moj.setIzbranaRegija(r)}"
+                                             action="dnevniPodatkiRegije.xhtml"/>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Izbriši"/>
+                            </f:facet>
+                            <h:commandButton class="btn btn-danger mr-2"
+                                             value="Izbriši" actionListener="#{moj.izbrisiRegijo(r)}"
+                                             action="vseRegije.xhtml"/>
+                        </h:column>
+                        <br/>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Uredi"/>
+                            </f:facet>
+                            <h:commandButton class="btn btn-success mr-2"
+                                             value="Uredi" actionListener="#{moj.setIzbranaRegija(r)}"
+                                             action="urediRegijo.xhtml"/>
+                        </h:column>
+
+                    </h:dataTable>
+                </h:form>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>
+
+</html>
+
+
+
+
+
+
+
+
+

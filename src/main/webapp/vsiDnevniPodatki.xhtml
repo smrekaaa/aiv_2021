@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <title><ui:insert name="title">Covid-19 Sledilnik</ui:insert></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</h:head>
+
+<h:body>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand"
+                   href="#{facesContext.externalContext.applicationContextPath}/faces/vseRegije.xhtml">Covid-19 sledilnik</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#{facesContext.externalContext.applicationContextPath}/faces/vseRegije.xhtml">Regije</a>
+                </li>
+                <li>
+                    <a href="#{facesContext.externalContext.applicationContextPath}/faces/vsiDnevniPodatki.xhtml">Dnevni vnosi</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col-12">
+                    <h2 class="text-center mt-5 ">Dnevni Podatki </h2>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <h:form>
+                    <h:dataTable
+                            class="table table-dark mt-5"
+                            value="#{moj.getVsiDnevniPodatki()}" var="dp" selectionMode="single">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Regija"/>
+                            </f:facet>
+                            <h:outputText value="${dp.key}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Datum"/>
+                            </f:facet>
+                            <h:outputText value="#{dp.value.datum}">
+                                <f:convertDateTime pattern="dd.MM.yyyy"/>
+                            </h:outputText>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Hospitalizirani"/>
+                            </f:facet>
+                            <h:outputText value="#{dp.value.hospitalizirani}"/>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Okuženi"/>
+                            </f:facet>
+                            <h:outputText value="#{dp.value.okuzeni}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Testirani"/>
+                            </f:facet>
+                            <h:outputText value="#{dp.value.testirani}"/>
+                        </h:column>
+
+                    </h:dataTable>
+                </h:form>
+            </div>
+        </div>
+
+    </div>
+</h:body>
+
+</html>
+
+
+
+
+
+
+
+
+

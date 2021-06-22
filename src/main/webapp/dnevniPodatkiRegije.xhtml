@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="WEB-INF/template/template.xhtml">
+
+    <ui:define name="content">
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col-12">
+                    <h2 class="text-center mt-5 ">#{moj.izbranaRegija.naziv}: Dnevni Podatki </h2>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <h:button class="btn btn-primary"
+                              value="Ustvari dnevni podatek"
+                              outcome="dodajDnevniPodatek.xhtml"/>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <h:form>
+                    <h:dataTable
+                            class="table table-dark mt-5"
+                            value="#{moj.getVsiDnevniPodatkiRegije()}" var="dp" selectionMode="single">
+                    <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Datum"/>
+                            </f:facet>
+                            <h:outputText  value="#{dp.datum}">
+                                <f:convertDateTime pattern="dd.MM.yyyy" />
+                            </h:outputText>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Hospitalizirani"/>
+                            </f:facet>
+                            <h:outputText  value="#{dp.hospitalizirani}"/>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Okuženi"/>
+                            </f:facet>
+                            <h:outputText  value="#{dp.okuzeni}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Testirani"/>
+                            </f:facet>
+                            <h:outputText  value="#{dp.testirani}"/>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Izbriši"/>
+                            </f:facet>
+                            <h:commandButton class="btn btn-danger mr-2"
+                                             value="Izbriši" actionListener="#{moj.izbrisiDnevniPodatek(dp, moj.izbranaRegija)}"
+                                             />
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Uredi"/>
+                            </f:facet>
+                            <h:commandButton class="btn btn-success mr-2"
+                                             value="Uredi"
+                                             actionListener="#{moj.setIzbranDnevniPodatek(dp)}"
+                                             action="urediDnevniPodatek.xhtml"/>
+                        </h:column>
+
+                    </h:dataTable>
+                </h:form>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>
+
+</html>
+
+
+
+
+
+
+
+
+

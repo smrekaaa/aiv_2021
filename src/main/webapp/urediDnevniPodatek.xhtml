@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="WEB-INF/template/template.xhtml">
+
+    <ui:define name="content">
+        <div class="container">
+            <div class="row mt-3">
+
+                <div class="card card-signin my-5">
+                    <div class="card-body">
+                        <h2 class="text-center display-4 mb-5">#{moj.izbranaRegija.naziv}: Uredi dnevni podatek</h2>
+
+                        <h:form>
+                            <table border="0">
+
+                                <div class="form-label ">
+                                    <label for="n_datum">Datum:</label>
+                                    <h:inputText id="n_datum" class="form-control"
+                                                 value="#{moj.izbranDnevniPodatek.datum}">
+                                        <f:convertDateTime pattern="dd.MM.yyyy"/>
+                                        <f:validateRequired/>
+                                    </h:inputText> *
+                                    <h:message for="n_datum" style="color:red"/>
+                                </div>
+                                <br/>
+
+                                <div class="form-label ">
+                                    <label for="n_testirani">Število testiranj:</label>
+                                    <h:inputText id="n_testirani" class="form-control"
+                                                 value="#{moj.izbranDnevniPodatek.testirani}">
+                                        <f:validateRequired/>
+                                        <f:convertNumber integerOnly="true"/>
+                                    </h:inputText> *
+                                    <h:message for="n_testirani" style="color:red"/>
+                                </div>
+                                <br/>
+
+                                <div class="form-label ">
+                                    <label for="n_okuzeni">Število okuženih:</label>
+                                    <h:inputText id="n_okuzeni" class="form-control"
+                                                 value="#{moj.izbranDnevniPodatek.okuzeni}">
+                                        <f:validateRequired/>
+                                        <f:convertNumber integerOnly="true"/>
+                                    </h:inputText> *
+                                    <h:message for="n_okuzeni" style="color:red"/>
+                                </div>
+                                <br/>
+
+                                <div class="form-label ">
+                                    <label for="n_hosp">Število hospitaliziranih:</label>
+                                    <h:inputText id="n_hosp" class="form-control"
+                                                 value="#{moj.izbranDnevniPodatek.hospitalizirani}">
+                                        <f:validateRequired/>
+                                        <f:convertNumber integerOnly="true"/>
+                                    </h:inputText> *
+                                    <h:message for="n_hosp" style="color:red"/>
+                                </div>
+
+                                <h:commandButton
+                                        class="btn btn-primary"
+                                        value="Shrani"
+                                        actionListener="#{moj.updateDnevniPodatek(moj.izbranDnevniPodatek)}"
+                                        action="dnevniPodatkiRegije.xhtml"/>
+                            </table>
+
+                        </h:form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>
+</html>
