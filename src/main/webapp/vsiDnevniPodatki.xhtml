@@ -54,8 +54,8 @@
                             <f:facet name="header">
                                 <h:outputText value="Datum"/>
                             </f:facet>
-                            <h:outputText value="#{dp.value.datum}">
-                                <f:convertDateTime pattern="dd.MM.yyyy"/>
+                            <h:outputText value="#{dp.value.datum.time}">
+                                <f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Ljubljana"/>
                             </h:outputText>
                         </h:column>
 

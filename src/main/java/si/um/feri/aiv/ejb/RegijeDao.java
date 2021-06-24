@@ -7,7 +7,6 @@ import si.um.feri.aiv.vao.Regija;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class RegijeDao implements Regije {
@@ -44,7 +43,7 @@ public class RegijeDao implements Regije {
         log.info("Regija dodana");
     }
 
-    @Override
+
     public void spremeniRegijo(String naziv, String imeSkrbnika, String priimekSkrbnika,
                                String email, int stPrebivalcev) {
         Regija r = najdiNaziv(naziv);
@@ -97,7 +96,7 @@ public class RegijeDao implements Regije {
 
 
     @Override
-    public List<DnevniPodatek> vrniVseDnevnePodatkeNaDatum(Date d) {
+    public List<DnevniPodatek> vrniVseDnevnePodatkeNaDatum(GregorianCalendar d) {
         List<DnevniPodatek> dps = new ArrayList<DnevniPodatek>();
         for (Regija r : regije) {
             for (DnevniPodatek dp : r.getDnevniPodatki()) {
@@ -141,7 +140,7 @@ public class RegijeDao implements Regije {
     }
 
 
-    private boolean compareDate(Date d1, Date d2) {
+    private boolean compareDate(Calendar d1, Date d2) {
         LocalDate ld1 = d1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate ld2 = d2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 

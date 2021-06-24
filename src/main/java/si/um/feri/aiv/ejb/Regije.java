@@ -3,8 +3,10 @@ package si.um.feri.aiv.ejb;
 import si.um.feri.aiv.vao.DnevniPodatek;
 import si.um.feri.aiv.vao.Regija;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,20 +14,21 @@ public interface Regije {
 
     void dodajDnevniVnos(DnevniPodatek novDnevniPodatek, Regija r);
 
-    Regija najdiNaziv(String naziv);
+    Regija najdiNaziv(String naziv) throws SQLException;
 
-    void shrani(Regija novaRegija);
+    // Shrani ali posodobi
+    void shrani(Regija novaRegija) throws SQLException;
 
-    void spremeniRegijo(String naziv, String imeSkrbnika,
-                        String PriimekSkrbnika, String email, int stPrebivalcev);
+    //void spremeniRegijo(String naziv, String imeSkrbnika,
+     //                   String PriimekSkrbnika, String email, int stPrebivalcev);
 
     void izbrisiRegijo(Regija regija);
 
-    List<Regija> vrniVseRegije();
+    List<Regija> vrniVseRegije() throws Exception;
 
     List<DnevniPodatek> vrniVseDnevnePodatkeRegije(Regija r);
 
-    List<DnevniPodatek> vrniVseDnevnePodatkeNaDatum(Date d);
+    List<DnevniPodatek> vrniVseDnevnePodatkeNaDatum(GregorianCalendar d);
 
     HashMap<String, DnevniPodatek> vrniVseDnevnePodatke();
 

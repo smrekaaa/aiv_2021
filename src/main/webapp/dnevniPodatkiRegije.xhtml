@@ -29,8 +29,8 @@
                             <f:facet name="header">
                                 <h:outputText value="Datum"/>
                             </f:facet>
-                            <h:outputText  value="#{dp.datum}">
-                                <f:convertDateTime pattern="dd.MM.yyyy" />
+                            <h:outputText  value="#{dp.datum.time}">
+                                <f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Ljubljana"/>
                             </h:outputText>
                         </h:column>
 
@@ -59,7 +59,7 @@
                                 <h:outputText value="Izbriši"/>
                             </f:facet>
                             <h:commandButton class="btn btn-danger mr-2"
-                                             value="Izbriši" actionListener="#{moj.izbrisiDnevniPodatek(dp, moj.izbranaRegija)}"
+                                             value="Izbriši" actionListener="#{moj.izbrisiDnevniPodatek(dp)}"
                                              />
                         </h:column>
 

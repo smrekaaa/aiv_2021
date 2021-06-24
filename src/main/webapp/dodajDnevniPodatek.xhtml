@@ -4,7 +4,8 @@
 <html
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:f="http://java.sun.com/jsf/core">
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:jsf="http://xmlns.jcp.org/jsf">
 
 <ui:composition template="WEB-INF/template/template.xhtml">
 
@@ -20,12 +21,12 @@
                             <table border="0">
 
                                 <div class="form-label ">
-                                    <label for="n_datum">Datum:</label>
-                                    <h:inputText id="n_datum" class="form-control"
-                                                 value="#{moj.novDnevniPodatek.datum}">
-                                        <f:convertDateTime pattern="dd.MM.yyyy"/>
+                                    <label >Datum:</label>
+                                    <input type="date" id="n_datum" class="form-control"
+                                                 jsf:value="#{moj.novDnevniPodatek.datum.time}">
+                                        <f:convertDateTime pattern="yyyy-MM-dd"/>
                                         <f:validateRequired/>
-                                    </h:inputText> *
+                                    </input> *
                                     <h:message for="n_datum" style="color:red"/>
                                 </div>
                                 <br/>
@@ -65,7 +66,7 @@
                                 <h:commandButton
                                         class="btn btn-primary"
                                         value="Dodaj"
-                                         actionListener="#{moj.dodajDnevniPodatek}"
+                                        actionListener="#{moj.dodajDnevniPodatek}"
                                          action="dnevniPodatkiRegije.xhtml"/>
                             </table>
 

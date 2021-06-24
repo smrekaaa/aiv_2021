@@ -2,23 +2,19 @@ package si.um.feri.aiv.jsf;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import si.um.feri.aiv.ejb.DnevniPodatki;
-import si.um.feri.aiv.ejb.DnevniPodatkiDao;
-import si.um.feri.aiv.ejb.Regije;
-import si.um.feri.aiv.ejb.RegijeDao;
+import si.um.feri.aiv.ejb.*;
 import si.um.feri.aiv.vao.DnevniPodatek;
 import si.um.feri.aiv.vao.Regija;
 
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
-@Named("moj")
+@ManagedBean(name="moj")
 @SessionScoped
 public class MojBean implements Serializable {
 
@@ -26,99 +22,62 @@ public class MojBean implements Serializable {
 
     Logger log= LoggerFactory.getLogger(MojBean.class);
 
-    private Regije rdao = new RegijeDao();
+    //private RegijaDao rdao = new RegijaDao();
     private Regija novaRegija = new Regija();
     private Regija izbranaRegija = null;
-    private DnevniPodatki dpdao = new DnevniPodatkiDao();
+    //private DnevniPodatekDao dpdao = new DnevniPodatekDao();
     private DnevniPodatek novDnevniPodatek = new DnevniPodatek();
     private DnevniPodatek izbranDnevniPodatek = null;
 
-
-
     // Regija ------------------------------
 
-    public List<Regija> getVseRegije(){
-        log.info("getVseRegije");
-        return rdao.vrniVseRegije();
-    }
-
-    public void dodajRegijo() {
+    public void dodajRegijo() throws Exception {
         log.info("dodajRegijo");
-        rdao.shrani(novaRegija);
+        RegijaDao.getInstance().shrani(novaRegija);
         novaRegija=new Regija();
     }
 
-    public void izbrisiRegijo(Regija r) {
+    public void izbrisiRegijo(Regija r) throws Exception {
         log.info("deleteRegija");
-        rdao.izbrisiRegijo(r);
+        RegijaDao.getInstance().izbrisi(r.getId());
     }
 
-    public void updateRegija(Regija r) {
+    public void updateRegija(Regija r) throws Exception {
         log.info("updateRegija");
-        rdao.spremeniRegijo(r.getNaziv(), r.getImeSkrbnika(),
-                r.getPriimekSkrbnika(), r.getEmailSkrbnika(), r.getStPrebivalcev());
+        RegijaDao.getInstance().shrani(r);
     }
 
     // Dnevni podatek ------------------------------
 
-    public Object[] getVsiDnevniPodatki(){
+    public  Object[] getVsiDnevniPodatki() throws Exception {
         log.info("getVsiDnevniPodatki");
-        return rdao.vrniVseDnevnePodatke().entrySet().toArray();
+        Calendar d = new GregorianCalendar().getInstance();
+        return DnevniPodatekDao.getInstance().vrniVseNaDatum((GregorianCalendar)d).entrySet().toArray();
     }
 
-    public List<DnevniPodatek> getVsiDnevniPodatkiRegije(){
+    public List<DnevniPodatek> getVsiDnevniPodatkiRegije() throws Exception {
         log.info("getVsiDnevniPodatkiRegije");
-        return rdao.vrniVseDnevnePodatkeRegije(izbranaRegija);
+        return DnevniPodatekDao.getInstance().vrniVseRegije(izbranaRegija.getId());
     }
 
-    public void dodajDnevniPodatek() {
+    public void dodajDnevniPodatek() throws Exception {
         log.info("dodajDnevniPodatek");
-        rdao.dodajDnevniVnos(novDnevniPodatek, izbranaRegija);
+        DnevniPodatekDao.getInstance().shrani(novDnevniPodatek);
         novDnevniPodatek = new DnevniPodatek();
+        novDnevniPodatek.setRegijaId(this.izbranaRegija.getId());
     }
 
-    public void izbrisiDnevniPodatek(DnevniPodatek dp, Regija r) {
+    public void izbrisiDnevniPodatek(DnevniPodatek dp) throws Exception {
         log.info("izbrisiDnevniPodatek");
-        rdao.izbrisiDnevniVnos(dp, r);
+        DnevniPodatekDao.getInstance().izbrisi(dp.getId());
       }
 
-    public void updateDnevniPodatek(DnevniPodatek dp) {
+    public void updateDnevniPodatek(DnevniPodatek dp) throws Exception {
         log.info("updateDnevniPodatel");
-        rdao.spremeniDnevniVnos(izbranaRegija, dp.getDatum(), dp.getOkuzeni(),
-                dp.getHospitalizirani(), dp.getTestirani());
-    }
-
-    // Podateki
-    public void setPodatki() throws ParseException{
-        log.info("setPodatki");
-
-        Regija r1 = new Regija("Savinjska", "Ela", "Pirnat", "ep@mail.com", 300);
-        Regija r2 = new Regija("Podravska", "Pupa", "Kos", "pk@mail.com", 500);
-
-        Date date1 = new SimpleDateFormat("dd.MM.yyyy").parse("22.06.2021");
-        Date date2 = new SimpleDateFormat("dd.MM.yyyy").parse("21.06.2021");
-        DnevniPodatek dp1 = new DnevniPodatek(2, 2, 2, date1);
-        DnevniPodatek dp2 = new DnevniPodatek(3, 3, 4, date2);
-        DnevniPodatek dp3 = new DnevniPodatek(4, 4, 4, date1);
-        DnevniPodatek dp4 = new DnevniPodatek(5, 5, 5, date2);
-        rdao.shrani(r1);
-        rdao.shrani(r2);
-        rdao.dodajDnevniVnos(dp1, r1);
-        rdao.dodajDnevniVnos(dp2, r1);
-        rdao.dodajDnevniVnos(dp3, r2);
-        rdao.dodajDnevniVnos(dp4, r2);
-
+        DnevniPodatekDao.getInstance().shrani(dp);
     }
 
     //Setters & Getters - Regija
-
-    public Regije getRdao() {
-        return rdao;
-    }
-
-    public void setRdao(Regije rdao) {
-        this.rdao = rdao;
-    }
 
     public Regija getNovaRegija() {
         return novaRegija;
@@ -134,15 +93,9 @@ public class MojBean implements Serializable {
 
     public void setIzbranaRegija(Regija izbranaRegija) {
         this.izbranaRegija = izbranaRegija;
+        this.novDnevniPodatek.setRegijaId(this.izbranaRegija.getId());
     }
 
-    public DnevniPodatki getDpdao() {
-        return dpdao;
-    }
-
-    public void setDpdao(DnevniPodatki dpdao) {
-        this.dpdao = dpdao;
-    }
 
     public DnevniPodatek getNovDnevniPodatek() {
         return novDnevniPodatek;

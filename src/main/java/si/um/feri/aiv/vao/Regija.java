@@ -1,10 +1,20 @@
 package si.um.feri.aiv.vao;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Regija {
+public class Regija implements Serializable {
 
 
+    public Regija(int id, String naziv, String imeSkrbnika, String priimekSkrbnika, String emailSkrbnika, int stPrebivalcev) {
+        this.id = id;
+        this.naziv = naziv;
+        this.imeSkrbnika = imeSkrbnika;
+        this.priimekSkrbnika = priimekSkrbnika;
+        this.emailSkrbnika = emailSkrbnika;
+        this.stPrebivalcev = stPrebivalcev;
+        this.dnevniPodatki = new ArrayList<DnevniPodatek>();
+    }
     public Regija(String naziv, String imeSkrbnika, String priimekSkrbnika, String emailSkrbnika, int stPrebivalcev) {
         this.naziv = naziv;
         this.imeSkrbnika = imeSkrbnika;
@@ -16,6 +26,8 @@ public class Regija {
     public Regija(){
         this("","", "", "", 0);
     };
+
+    private int id;
 
     private String naziv;
 
@@ -30,6 +42,13 @@ public class Regija {
     private List<DnevniPodatek> dnevniPodatki;
 
     //Setters&Getters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNaziv() {
         return naziv;
