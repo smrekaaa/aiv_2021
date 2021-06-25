@@ -73,6 +73,16 @@
                                              action="urediDnevniPodatek.xhtml"/>
                         </h:column>
 
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Kloniraj"/>
+                            </f:facet>
+                            <h:commandButton class="btn btn-secondary mr-2"
+                                             value="Kloniraj"
+                                             actionListener="#{moj.dodajDnevniPodatekClone(dp)}"
+                                             action="dodajDnevniPodatek.xhtml"/>
+                        </h:column>
+
                     </h:dataTable>
                 </h:form>
             </div>

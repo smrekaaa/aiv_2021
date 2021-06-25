@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class DnevniPodatek implements Serializable {
+public class DnevniPodatek implements Serializable, Cloneable {
 
     public DnevniPodatek(int okuzeni, int hospitalizirani, int testirani, GregorianCalendar datum) {
         this.okuzeni = okuzeni;
@@ -106,5 +106,9 @@ public class DnevniPodatek implements Serializable {
                 ", datum=" + sdf.format(this.datum.getTime()) +
                 ", regijaId=" + regijaId +
                 '}';
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

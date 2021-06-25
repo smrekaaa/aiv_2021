@@ -67,9 +67,14 @@ public class MojBean implements Serializable {
 
     public void dodajDnevniPodatek() throws Exception {
         log.info("dodajDnevniPodatek");
-        DnevniPodatekDao.getInstance().shrani(novDnevniPodatek);
+        dpdao.shrani(novDnevniPodatek);
         novDnevniPodatek = new DnevniPodatek();
         novDnevniPodatek.setRegijaId(this.izbranaRegija.getId());
+    }
+
+    public void dodajDnevniPodatekClone(DnevniPodatek dp) throws Exception {
+        log.info("dodajDnevniPodatekClone");
+        this.novDnevniPodatek = (DnevniPodatek) dp.clone();
     }
 
     public void izbrisiDnevniPodatek(DnevniPodatek dp) throws Exception {
