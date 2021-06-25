@@ -22,12 +22,10 @@
 
                                 <div class="form-label ">
                                     <label for="n_datum">Datum:</label>
-                                    <input type="date" id="n_datum" class="form-control"
-                                           jsf:value="#{moj.izbranDnevniPodatek.datum.time}">
-                                        <f:convertDateTime pattern="dd. MM. yyyy"/>
-                                        <f:validateRequired/>
-                                    </input> *
-                                    <h:message for="n_datum" style="color:red"/>
+                                    <br/>
+                                    <h:outputText id="n_datum" value="#{moj.izbranDnevniPodatek.datum.time}">
+                                        <f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Ljubljana"/>
+                                    </h:outputText>
                                 </div>
                                 <br/>
 

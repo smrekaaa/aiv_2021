@@ -67,13 +67,11 @@ public class DnevniPodatekDao extends Dao<DnevniPodatek> {
         if (obj == null) return;
 
         if (najdi(obj.getId()) != null) {
-            PreparedStatement ps = conn.prepareStatement("update dnevni_podatek set okuzeni=? , hospitalizirani=? , testirani=? , datum=?, regija_id=? where dnevni_podatek_id=?");
+            PreparedStatement ps = conn.prepareStatement("update dnevni_podatek set okuzeni=? , hospitalizirani=? , testirani=? where dnevni_podatek_id=?");
             ps.setInt(1, obj.getOkuzeni());
             ps.setInt(2, obj.getHospitalizirani());
             ps.setInt(3, obj.getTestirani());
-            ps.setTimestamp(4, new Timestamp(obj.getDatum().getTimeInMillis()));
-            ps.setInt(5,obj.getRegijaId());
-            ps.setInt(6, obj.getId());
+            ps.setInt(4, obj.getId());
             ps.executeUpdate();
         } else {
             PreparedStatement ps = conn.prepareStatement("insert into dnevni_podatek(okuzeni, hospitalizirani, testirani, datum, regija_id) values (?,?,?,?,?)");
@@ -142,6 +140,7 @@ public class DnevniPodatekDao extends Dao<DnevniPodatek> {
 
         }
         rs.close();
+        conn.close();
 
         return dps;
     }
@@ -167,6 +166,7 @@ public class DnevniPodatekDao extends Dao<DnevniPodatek> {
             dps.add(dp);
         }
         rs.close();
+        conn.close();
 
         return dps;
     }

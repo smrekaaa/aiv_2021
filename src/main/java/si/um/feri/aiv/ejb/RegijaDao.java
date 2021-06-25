@@ -105,7 +105,7 @@ public class RegijaDao extends Dao<Regija>{
     @Override
     public void izbrisi(int id, Connection conn) throws Exception {
         log.info("DAO: iščem regijo-" + id);
-        PreparedStatement ps = conn.prepareStatement("delete from regija where regija_id=?");
+            PreparedStatement ps = conn.prepareStatement("delete from regija where regija_id=?");
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
 
