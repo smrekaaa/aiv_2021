@@ -3,12 +3,14 @@ package si.um.feri.aiv.ejb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ejb.Local;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+@Local
 public abstract class Dao<T> {
 
     protected Logger log= LoggerFactory.getLogger(Dao.class);

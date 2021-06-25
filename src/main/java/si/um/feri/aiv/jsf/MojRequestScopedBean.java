@@ -3,11 +3,11 @@ package si.um.feri.aiv.jsf;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import si.um.feri.aiv.ejb.DnevniPodatekDao;
-import si.um.feri.aiv.ejb.PsqlDao;
 import si.um.feri.aiv.ejb.RegijaDao;
 import si.um.feri.aiv.vao.DnevniPodatek;
 import si.um.feri.aiv.vao.Regija;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import java.util.ArrayList;
@@ -16,6 +16,12 @@ import java.util.List;
 @ManagedBean(name="mojrs")
 @RequestScoped
 public class MojRequestScopedBean {
+
+    @EJB
+    private RegijaDao rdao = RegijaDao.getInstance();
+
+    @EJB
+    private DnevniPodatekDao dpdao = DnevniPodatekDao.getInstance();
 
     Logger log = LoggerFactory.getLogger(MojRequestScopedBean.class);
 
@@ -26,7 +32,7 @@ public class MojRequestScopedBean {
         log.info("JSF BEAN: getVseOsebe!");
         if (getVseRegijeRet == null) {
             try {
-                getVseRegijeRet = RegijaDao.getInstance().vrniVse();
+                getVseRegijeRet = rdao.vrniVse();
             } catch (Exception e) {
                 getVseRegijeRet = new ArrayList<>();
             }
@@ -38,7 +44,7 @@ public class MojRequestScopedBean {
         log.info("JSF BEAN: getVseDanasnjeDnevneVnose!");
         if (getDnevniPodatekRet == null) {
             try {
-                getDnevniPodatekRet = DnevniPodatekDao.getInstance().vrniVse();
+                getDnevniPodatekRet = dpdao.vrniVse();
             } catch (Exception e) {
                 getDnevniPodatekRet = new ArrayList<>();
             }

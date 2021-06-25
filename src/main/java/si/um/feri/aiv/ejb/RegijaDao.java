@@ -2,15 +2,19 @@ package si.um.feri.aiv.ejb;
 
 import si.um.feri.aiv.vao.Regija;
 
+import javax.ejb.Local;
+import javax.ejb.Stateless;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RegijaDao extends Dao<Regija>{
+@Stateless
+@Local(RegijaDao.class)
+public class RegijaDao extends Dao<Regija> implements Regije{
 
-    private RegijaDao() {
+    public RegijaDao() {
         super("java:/PostgresDS",
                 "create table if not exists regija(regija_id serial primary key,naziv varchar (90) unique not null,ime_skrbnika varchar (90) not null,priimek_skrbnika varchar (90) not null,email_skrbnika varchar (90) unique not null,st_prebivalcev int not null);");
     }

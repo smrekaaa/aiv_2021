@@ -2,20 +2,17 @@ package si.um.feri.aiv.ejb;
 
 import si.um.feri.aiv.vao.DnevniPodatek;
 
+import javax.ejb.Local;
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 
+@Local
 public interface DnevniPodatki {
 
-    DnevniPodatek najdi(ZonedDateTime datum);
+    public HashMap<String, DnevniPodatek> vrniVseNaDatum(GregorianCalendar d) throws Exception ;
 
-    void shrani(DnevniPodatek dnevniPodatek);
-
-    void izbrisiDnevniPodatek(DnevniPodatek dp);
-
-    void SpremeniDnevniPodatek(int stOkuzenih, int stPrebolelih,
-                               int stHospitaliziranih, Date datum);
-
-    List<DnevniPodatek> vrniVseDnevnePodatke();
+    public List<DnevniPodatek> vrniVseRegije(int regijaId) throws Exception;
 }

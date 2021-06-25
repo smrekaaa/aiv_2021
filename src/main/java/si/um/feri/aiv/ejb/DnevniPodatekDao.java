@@ -3,14 +3,18 @@ package si.um.feri.aiv.ejb;
 import si.um.feri.aiv.vao.DnevniPodatek;
 import si.um.feri.aiv.vao.Regija;
 
+import javax.ejb.Local;
+import javax.ejb.Stateless;
 import javax.print.attribute.standard.DateTimeAtCompleted;
 import java.sql.*;
 import java.util.*;
 import java.util.Date;
 
-public class DnevniPodatekDao extends Dao<DnevniPodatek> {
+@Stateless
+@Local(DnevniPodatekDao.class)
+public class DnevniPodatekDao extends Dao<DnevniPodatek> implements DnevniPodatki {
 
-    private DnevniPodatekDao() throws SQLException {
+    public DnevniPodatekDao() throws SQLException {
         super("java:/PostgresDS",
                 "CREATE TABLE  IF NOT EXISTS dnevni_podatek (\n" +
                         "\tdnevni_podatek_id SERIAL PRIMARY KEY,\n" +
@@ -114,6 +118,7 @@ public class DnevniPodatekDao extends Dao<DnevniPodatek> {
         return dps;
     }
 
+    @Override
     public HashMap<String, DnevniPodatek> vrniVseNaDatum(GregorianCalendar d) throws Exception {
         log.info("DAO: vracam vse dnevne podatke na datum: " + d.toString());
         Connection conn = super.getBaza().getConnection();
@@ -145,6 +150,7 @@ public class DnevniPodatekDao extends Dao<DnevniPodatek> {
         return dps;
     }
 
+    @Override
     public List<DnevniPodatek> vrniVseRegije(int regijaId) throws Exception {
         log.info("DAO: vracam vse dnevne podatke regije");
         Connection conn = super.getBaza().getConnection();

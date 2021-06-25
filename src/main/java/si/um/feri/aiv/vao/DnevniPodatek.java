@@ -1,11 +1,12 @@
 package si.um.feri.aiv.vao;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class DnevniPodatek {
+public class DnevniPodatek implements Serializable {
 
     public DnevniPodatek(int okuzeni, int hospitalizirani, int testirani, GregorianCalendar datum) {
         this.okuzeni = okuzeni;
