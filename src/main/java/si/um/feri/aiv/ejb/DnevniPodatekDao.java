@@ -67,8 +67,10 @@ public class DnevniPodatekDao extends Dao<DnevniPodatek> implements DnevniPodatk
 
     @Override
     public void shrani(DnevniPodatek obj, Connection conn) throws Exception {
-        log.info("DAO: shranjujem regijo");
+        log.info("DAO: shranjujem/urejam dnevni Podatek");
         if (obj == null) return;
+
+        Regija r = RegijaDao.getInstance().najdi(obj.getRegijaId());
 
         if (najdi(obj.getId()) != null) {
             PreparedStatement ps = conn.prepareStatement("update dnevni_podatek set okuzeni=? , hospitalizirani=? , testirani=? where dnevni_podatek_id=?");
@@ -77,6 +79,9 @@ public class DnevniPodatekDao extends Dao<DnevniPodatek> implements DnevniPodatk
             ps.setInt(3, obj.getTestirani());
             ps.setInt(4, obj.getId());
             ps.executeUpdate();
+
+            r.obvestiVseOpazovalceZaUrejenDnevniPodatek(obj);
+
         } else {
             PreparedStatement ps = conn.prepareStatement("insert into dnevni_podatek(okuzeni, hospitalizirani, testirani, datum, regija_id) values (?,?,?,?,?)");
             ps.setInt(1, obj.getOkuzeni());
@@ -85,6 +90,8 @@ public class DnevniPodatekDao extends Dao<DnevniPodatek> implements DnevniPodatk
             ps.setTimestamp(4, new Timestamp(obj.getDatum().getTimeInMillis()));
             ps.setInt(5,obj.getRegijaId());
             ps.executeUpdate();
+
+            r.obvestiVseOpazovalceZaNovDnevniPodatek(obj);
 
             ResultSet res = ps.getGeneratedKeys();
             while (res.next())

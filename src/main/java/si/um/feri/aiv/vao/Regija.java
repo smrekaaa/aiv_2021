@@ -1,4 +1,9 @@
 package si.um.feri.aiv.vao;
+import si.um.feri.aiv.patterns.observers.NovDnevniPodatekMail;
+import si.um.feri.aiv.patterns.observers.Opazovalec;
+import si.um.feri.aiv.patterns.observers.UrejenDnevniPodatek;
+import si.um.feri.aiv.patterns.observers.UrejenaRegija;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +19,9 @@ public class Regija implements Serializable {
         this.emailSkrbnika = emailSkrbnika;
         this.stPrebivalcev = stPrebivalcev;
         this.dnevniPodatki = new ArrayList<DnevniPodatek>();
+        this.registrirajOpazovalcaZaUrejenoRegijo(new UrejenaRegija());
+        this.registrirajOpazovalcaZaUrejenDnevniPodatek(new UrejenDnevniPodatek());
+        this.registrirajOpazovalcaZaNovDnevniPodatek(new NovDnevniPodatekMail());
     }
     public Regija(String naziv, String imeSkrbnika, String priimekSkrbnika, String emailSkrbnika, int stPrebivalcev) {
         this.naziv = naziv;
@@ -22,9 +30,15 @@ public class Regija implements Serializable {
         this.emailSkrbnika = emailSkrbnika;
         this.stPrebivalcev = stPrebivalcev;
         this.dnevniPodatki = new ArrayList<DnevniPodatek>();
+        this.registrirajOpazovalcaZaUrejenoRegijo(new UrejenaRegija());
+        this.registrirajOpazovalcaZaUrejenDnevniPodatek(new UrejenDnevniPodatek());
+        this.registrirajOpazovalcaZaNovDnevniPodatek(new NovDnevniPodatekMail());
     }
     public Regija(){
         this("","", "", "", 0);
+        this.registrirajOpazovalcaZaUrejenoRegijo(new UrejenaRegija());
+        this.registrirajOpazovalcaZaUrejenDnevniPodatek(new UrejenDnevniPodatek());
+        this.registrirajOpazovalcaZaNovDnevniPodatek(new NovDnevniPodatekMail());
     };
 
     private int id;
@@ -40,6 +54,43 @@ public class Regija implements Serializable {
     private int stPrebivalcev;
 
     private List<DnevniPodatek> dnevniPodatki;
+
+    private List<Opazovalec> opazovalciUrejenaRegija = new ArrayList<>();
+    private List<Opazovalec> opazovalciNovDnevniPodatek = new ArrayList<>();
+    private List<Opazovalec> opazovalciUrejenDnevniPodatek = new ArrayList<>();
+
+    // Opazovalci
+    public void registrirajOpazovalcaZaUrejenoRegijo(Opazovalec o) {
+        opazovalciUrejenaRegija.add(o);
+    }
+
+    public void obvestiVseOpazovalceZaUrejenoRegijo() {
+        for (Opazovalec o : opazovalciUrejenaRegija) {
+            o.akcija(this);
+        }
+    }
+
+    public void registrirajOpazovalcaZaNovDnevniPodatek(Opazovalec o) {
+        opazovalciNovDnevniPodatek.add(o);
+    }
+
+    public void obvestiVseOpazovalceZaNovDnevniPodatek(DnevniPodatek dp) {
+        for (Opazovalec o: opazovalciNovDnevniPodatek) {
+            o.akcija(dp, this);
+        }
+    }
+
+    public void registrirajOpazovalcaZaUrejenDnevniPodatek(Opazovalec o) {
+        opazovalciUrejenDnevniPodatek.add(o);
+    }
+
+    public void obvestiVseOpazovalceZaUrejenDnevniPodatek(DnevniPodatek dp) {
+        System.out.println("a aaaaaaaaaaaaaa urejen podatek");
+        for (Opazovalec o: opazovalciUrejenDnevniPodatek) {
+            System.out.println("a aaaaaaaaaaaaaa urejen podatek");
+            o.akcija(dp, this);
+        }
+    }
 
     //Setters&Getters
     public int getId() {
@@ -96,6 +147,21 @@ public class Regija implements Serializable {
 
     public void setDnevniPodatki(List<DnevniPodatek> dnevniPodatki) {
         this.dnevniPodatki = dnevniPodatki;
+    }
+
+    // toString
+
+    @Override
+    public String toString() {
+        return "Regija{" +
+                "id=" + id +
+                ", naziv='" + naziv + '\'' +
+                ", imeSkrbnika='" + imeSkrbnika + '\'' +
+                ", priimekSkrbnika='" + priimekSkrbnika + '\'' +
+                ", emailSkrbnika='" + emailSkrbnika + '\'' +
+                ", stPrebivalcev=" + stPrebivalcev +
+                ", dnevniPodatki=" + dnevniPodatki +
+                '}';
     }
 
     // Other methods

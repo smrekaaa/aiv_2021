@@ -93,4 +93,18 @@ public class DnevniPodatek implements Serializable {
 
     private static SimpleDateFormat sdf=new SimpleDateFormat("dd. MM. yyyy HH:mm:ss");
 
+    // toString
+
+    @Override
+    public String toString() {
+        sdf.setTimeZone(this.datum.getTimeZone());
+        return "DnevniPodatek{" +
+                "id=" + id +
+                ", okuzeni=" + okuzeni +
+                ", hospitalizirani=" + hospitalizirani +
+                ", testirani=" + testirani +
+                ", datum=" + sdf.format(this.datum.getTime()) +
+                ", regijaId=" + regijaId +
+                '}';
+    }
 }

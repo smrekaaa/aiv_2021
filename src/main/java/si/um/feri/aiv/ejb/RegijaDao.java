@@ -1,5 +1,6 @@
 package si.um.feri.aiv.ejb;
 
+import si.um.feri.aiv.vao.DnevniPodatek;
 import si.um.feri.aiv.vao.Regija;
 
 import javax.ejb.Local;
@@ -61,6 +62,8 @@ public class RegijaDao extends Dao<Regija> implements Regije{
             ps.setInt(5, obj.getStPrebivalcev());
             ps.setInt(6, obj.getId());
             ps.executeUpdate();
+
+            obj.obvestiVseOpazovalceZaUrejenoRegijo();
         } else {
             PreparedStatement ps = conn.prepareStatement("insert into regija(naziv, ime_skrbnika, priimek_skrbnika, email_skrbnika, st_prebivalcev) values (?,?,?,?,?)");
             ps.setString(1, obj.getNaziv());
@@ -75,10 +78,7 @@ public class RegijaDao extends Dao<Regija> implements Regije{
                 obj.setId(res.getInt(1));
             res.close();
         }
-        /*
-        for (DnevniPodatek dp:obj.getKontakti())
-            .getInstance().shrani(dp,conn);
-        */
+
     }
 
     @Override
