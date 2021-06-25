@@ -104,7 +104,6 @@ public class DnevniPodatek implements Serializable, Cloneable {
                 ", hospitalizirani=" + hospitalizirani +
                 ", testirani=" + testirani +
                 ", datum=" + sdf.format(this.datum.getTime()) +
-                ", regijaId=" + regijaId +
                 '}';
     }
 
