@@ -1,5 +1,6 @@
 package si.um.feri.aiv.dao;
 
+import si.um.feri.aiv.FilterType;
 import si.um.feri.aiv.vao.DnevniPodatek;
 import si.um.feri.aiv.vao.Regija;
 
@@ -22,4 +23,8 @@ public interface DnevniPodatekDao {
     public List<DnevniPodatek> getDnevnePodatkeRegije(int r_id);
 
     public HashMap<String, DnevniPodatek> getDnevnePodatkeNaDatum(Calendar d);
+
+    public HashMap<String, DnevniPodatek> getFiltriraneDnevnePodatke(FilterType ft);
+
+
 }

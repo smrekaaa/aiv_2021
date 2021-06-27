@@ -2,12 +2,14 @@ package si.um.feri.aiv.jsf;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import si.um.feri.aiv.FilterType;
 import si.um.feri.aiv.dao.DnevniPodatekDao;
 import si.um.feri.aiv.dao.RegijaDao;
 import si.um.feri.aiv.vao.DnevniPodatek;
 import si.um.feri.aiv.vao.Regija;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -33,12 +35,13 @@ public class MojBean implements Serializable {
     private Regija izbranaRegija = null;
     private DnevniPodatek novDnevniPodatek = new DnevniPodatek();
     private DnevniPodatek izbranDnevniPodatek = null;
+    private Object[] vsiDnevniPodatki = null;
+    private FilterType filterType = null;
 
     // Regija ------------------------------
 
     public void dodajRegijo() throws Exception {
         log.info("dodajRegijo " + novaRegija);
-        //rdao.shrani(novaRegija);
         rdao.dodajRegijo(novaRegija);
 
         novaRegija=new Regija();
@@ -46,22 +49,47 @@ public class MojBean implements Serializable {
 
     public void izbrisiRegijo(Regija r) throws Exception {
         log.info("deleteRegija");
-        //rdao.izbrisi(r.getId());
         rdao.izbrisiRegijo(r);
     }
 
     public void updateRegija(Regija r) throws Exception {
         log.info("updateRegija");
-        //rdao.shrani(r);
         rdao.urediRegijo(r);
     }
 
     // Dnevni podatek ------------------------------
 
-    public  Object[] getVsiDnevniPodatki() throws Exception {
+    public void setVsiDnevniPodatki() {
+
+        if (vsiDnevniPodatki == null) {
+            log.info("setVsiDnevniPodatki");
+            if (filterType == null) {
+                Calendar d = new GregorianCalendar().getInstance();
+                this.vsiDnevniPodatki = dpdao.getDnevnePodatkeNaDatum(d).entrySet().toArray();
+                filterType = FilterType.NORMAL;
+            }
+        }
+       else  {
+           this.vsiDnevniPodatki = dpdao.getFiltriraneDnevnePodatke(filterType).entrySet().toArray();
+
+         }
+    }
+
+    public Object[] getVsiDnevniPodatki() throws Exception {
+
+        if (vsiDnevniPodatki == null) {
+            log.info("setVsiDnevniPodatki");
+            setVsiDnevniPodatki();
+        }
+
         log.info("getVsiDnevniPodatki");
-        Calendar d = new GregorianCalendar().getInstance();
-        return dpdao.getDnevnePodatkeNaDatum(d).entrySet().toArray();
+        return vsiDnevniPodatki;
+    }
+
+    public void getFiltriranePodatke(FilterType ft) {
+        log.info("getFiltriranePodatke");
+        filterType = ft;
+        vsiDnevniPodatki = dpdao.getFiltriraneDnevnePodatke(filterType).entrySet().toArray();;
     }
 
     public List<DnevniPodatek> getVsiDnevniPodatkiRegije() throws Exception {
@@ -74,21 +102,30 @@ public class MojBean implements Serializable {
         dpdao.dodajDnevniPodatek(novDnevniPodatek, izbranaRegija);
         novDnevniPodatek = new DnevniPodatek();
         novDnevniPodatek.setRegijaId(this.izbranaRegija.getRegijaId());
+        Calendar d = new GregorianCalendar().getInstance();
+        this.vsiDnevniPodatki = dpdao.getDnevnePodatkeNaDatum(d).entrySet().toArray();
+
     }
 
     public void dodajDnevniPodatekClone(DnevniPodatek dp) throws Exception {
         log.info("dodajDnevniPodatekClone");
         this.novDnevniPodatek = (DnevniPodatek) dp.clone();
+        Calendar d = new GregorianCalendar().getInstance();
+        this.vsiDnevniPodatki = dpdao.getDnevnePodatkeNaDatum(d).entrySet().toArray();
     }
 
     public void izbrisiDnevniPodatek(DnevniPodatek dp) throws Exception {
         log.info("izbrisiDnevniPodatek");
         dpdao.izbrisiDnevniPodatek(dp);
+        Calendar d = new GregorianCalendar().getInstance();
+        this.vsiDnevniPodatki = dpdao.getDnevnePodatkeNaDatum(d).entrySet().toArray();
       }
 
     public void updateDnevniPodatek(DnevniPodatek dp) throws Exception {
         log.info("updateDnevniPodatel");
         dpdao.urediDnevniPodatek(dp);
+        Calendar d = new GregorianCalendar().getInstance();
+        this.vsiDnevniPodatki = dpdao.getDnevnePodatkeNaDatum(d).entrySet().toArray();
     }
 
     //Setters & Getters - Regija
@@ -125,5 +162,13 @@ public class MojBean implements Serializable {
 
     public void setIzbranDnevniPodatek(DnevniPodatek izbranDnevniPodatek) {
         this.izbranDnevniPodatek = izbranDnevniPodatek;
+    }
+
+    public FilterType getFilterType() {
+        return filterType;
+    }
+
+    public void setFilterType(FilterType filterType) {
+        this.filterType = filterType;
     }
 }

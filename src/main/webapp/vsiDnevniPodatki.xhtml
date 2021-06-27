@@ -2,15 +2,19 @@
 <html
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:f="http://java.sun.com/jsf/core">
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:fn="http://xmlns.jcp.org/jsf/core">
 
 <h:head>
+
     <meta charset="UTF-8"/>
     <title><ui:insert name="title">Covid-19 Sledilnik</ui:insert></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </h:head>
+
 
 <h:body>
 
@@ -39,47 +43,103 @@
                     <h2 class="text-center mt-5 ">Dnevni Podatki </h2>
                 </div>
             </div>
+            <div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="btn-group" role="group" aria-label="Filtri">
+                               <h:form>
+                                    <p:commandButton
+                                            update="dp_table"
+                                            class="btn btn-success mr-2"
+                                            value=" do 10% Okuzenih"
+                                            ajax="false"
+                                            action="#{moj.getFiltriranePodatke('MIN_POS')}"
+                                    />
+                                   <p:commandButton
+                                           update="dp_table"
+                                           class="btn btn-success mr-2"
+                                           value="Zelena"
+                                           ajax="false"
+                                           action="#{moj.getFiltriranePodatke('ZELENA')}"
+                                   />
+                                   <p:commandButton
+                                           update="dp_table"
+                                           class="btn btn-success mr-2"
+                                           value="Rumena"
+                                           ajax="false"
+                                           action="#{moj.getFiltriranePodatke('RUMENA')}"
+                                   />
+                                   <p:commandButton
+                                           update="dp_table"
+                                           class="btn btn-success mr-2"
+                                           value="Oranzna"
+                                           ajax="false"
+                                           action="#{moj.getFiltriranePodatke('ORANZNA')}"
+                                   />
+                                   <p:commandButton
+                                           update="dp_table"
+                                           class="btn btn-success mr-2"
+                                           value="Rdeca"
+                                           ajax="false"
+                                           action="#{moj.getFiltriranePodatke('RDECA')}"
+                                   />
+                               </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="table-responsive">
                 <h:form>
-                    <h:dataTable
+                    <p:dataTable
+                            id="dp_table"
                             class="table table-dark mt-5"
-                            value="#{moj.getVsiDnevniPodatki()}" var="dp" selectionMode="single">
-                        <h:column>
+                            value="#{moj.getVsiDnevniPodatki()}"
+                            var="dp"
+                            rowKey="#{dp.key}"
+                            selectionMode="single">
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Regija"/>
                             </f:facet>
                             <h:outputText value="${dp.key}"/>
-                        </h:column>
-                        <h:column>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="ID"/>
+                            </f:facet>
+                            <h:outputText value="#{dp.value.id}">
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Datum"/>
                             </f:facet>
                             <h:outputText value="#{dp.value.datum.time}">
                                 <f:convertDateTime pattern="dd.MM.yyyy" timeZone="Europe/Ljubljana"/>
                             </h:outputText>
-                        </h:column>
+                        </p:column>
 
-                        <h:column>
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Hospitalizirani"/>
                             </f:facet>
                             <h:outputText value="#{dp.value.hospitalizirani}"/>
-                        </h:column>
+                        </p:column>
 
-                        <h:column>
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Okuženi"/>
                             </f:facet>
                             <h:outputText value="#{dp.value.okuzeni}"/>
-                        </h:column>
-                        <h:column>
+                        </p:column>
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Testirani"/>
                             </f:facet>
                             <h:outputText value="#{dp.value.testirani}"/>
-                        </h:column>
+                        </p:column>
 
-                    </h:dataTable>
+                    </p:dataTable>
                 </h:form>
             </div>
         </div>
