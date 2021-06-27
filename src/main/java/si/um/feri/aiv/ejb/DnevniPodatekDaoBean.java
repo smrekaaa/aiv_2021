@@ -83,8 +83,9 @@ public class DnevniPodatekDaoBean implements DnevniPodatekDao {
         java.sql.Date d1 = new java.sql.Date(d.getTimeInMillis());
         HashMap<String, DnevniPodatek> dpMap = new HashMap<String, DnevniPodatek>();
 
-        Query q=em.createQuery("select dp from dnevni_podatek dp where dp.datum=:d");
-        q.setParameter("d", d);
+        //Query q=em.createQuery("select dp from dnevni_podatek dp where dp.datum=:d");
+        Query q=em.createQuery("select dp from dnevni_podatek dp"); //ni logično sploh da to deluje, samo deluje?????
+        //q.setParameter("d", d);
         List<DnevniPodatek> dps = q.getResultList();
 
         for (DnevniPodatek o:dps) {
