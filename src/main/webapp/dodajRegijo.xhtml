@@ -19,59 +19,59 @@
 
                         <h:form>
                             <div class="form-label ">
-                                <label for="n_naziv">Naziv:</label>
-                                <h:inputText id="n_naziv" class="form-control"
+                                <label for="naziv">Naziv:</label>
+                                <h:inputText id="naziv" class="form-control"
                                              value="#{moj.novaRegija.naziv}">
                                     <f:validateRequired/>
                                 </h:inputText> *
-                                <h:message for="n_naziv" style="color:red"/>
+                                <h:message for="naziv" style="color:red"/>
                             </div>
                             <br/>
                             <div class="form-label ">
-                                <label for="n_ime">Ime skrbnika:</label>
-                                <h:inputText id="n_ime" class="form-control"
+                                <label for="ime">Ime skrbnika:</label>
+                                <h:inputText id="ime" class="form-control"
                                              value="#{moj.novaRegija.imeSkrbnika}">
                                     <f:validateRequired/>
                                 </h:inputText> *
-                                <h:message for="n_ime" style="color:red"/>
+                                <h:message for="ime" style="color:red"/>
                             </div>
                             <br/>
 
                             <div class="form-label ">
-                                <label for="n_priimek">Priimek skrbnika:</label>
-                                <h:inputText id="n_priimek" class="form-control"
+                                <label for="priimek">Priimek skrbnika:</label>
+                                <h:inputText id="priimek" class="form-control"
                                              value="#{moj.novaRegija.priimekSkrbnika}">
                                     <f:validateRequired/>
                                 </h:inputText> *
-                                <h:message for="n_priimek" style="color:red"/>
+                                <h:message for="priimek" style="color:red"/>
                             </div>
                             <br/>
 
                             <div class="form-label ">
-                                <label for="n_email">E-mail:</label>
-                                <h:inputText id="n_email" class="form-control"
+                                <label for="email">E-mail:</label>
+                                <h:inputText id="email" class="form-control"
                                              value="#{moj.novaRegija.emailSkrbnika}"
                                              validatorMessage="Vnesite ustrezen e-mail naslov">
                                     <f:validateRequired/>
                                     <f:validateRegex pattern=".+\@.+\..+"/>
                                 </h:inputText> *
-                                <h:message for="n_email" style="color:red"/>
+                                <h:message for="email" style="color:red"/>
                             </div>
                             <br/>
 
                             <div class="form-label ">
-                                <label for="n_prebivalstvo">Število prebivalcev:</label>
-                                <h:inputText id="n_prebivalstvo" class="form-control"
+                                <label for="prebivalstvo">Število prebivalcev:</label>
+                                <h:inputText id="prebivalstvo" class="form-control"
                                              value="#{moj.novaRegija.stPrebivalcev}">
                                     <f:validateRequired/>
                                     <f:convertNumber integerOnly="true"/>
                                 </h:inputText> *
-                                <h:message for="n_prebivalstvo" style="color:#ff0000"/>
+                                <h:message for="prebivalstvo" style="color:#ff0000"/>
                             </div>
                             <br/>
 
                             <h:commandButton class="btn btn-primary"
-                                    value="Dodaj" actionListener="#{moj.dodajRegijo}"
+                                    value="Dodaj" actionListener="#{moj.dodajRegijo()}"
                                     action="vseRegije.xhtml"/>
                         </h:form>
                     </div>

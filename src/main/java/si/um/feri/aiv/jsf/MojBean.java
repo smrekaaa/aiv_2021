@@ -2,13 +2,13 @@ package si.um.feri.aiv.jsf;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import si.um.feri.aiv.ejb.*;
+import si.um.feri.aiv.dao.DnevniPodatekDao;
+import si.um.feri.aiv.dao.RegijaDao;
 import si.um.feri.aiv.vao.DnevniPodatek;
 import si.um.feri.aiv.vao.Regija;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.ejb.EJB;
@@ -20,10 +20,10 @@ import javax.faces.bean.SessionScoped;
 public class MojBean implements Serializable {
 
     @EJB
-    private RegijaDao rdao = RegijaDao.getInstance();
+    private RegijaDao rdao; // = RegijaDao.getInstance();
 
     @EJB
-    private DnevniPodatekDao dpdao = DnevniPodatekDao.getInstance();
+    private DnevniPodatekDao dpdao; // = DnevniPodatekDao.getInstance();
 
     private static final long serialVersionUID = -8979220536758073133L;
 
@@ -37,19 +37,23 @@ public class MojBean implements Serializable {
     // Regija ------------------------------
 
     public void dodajRegijo() throws Exception {
-        log.info("dodajRegijo");
-        rdao.shrani(novaRegija);
+        log.info("dodajRegijo " + novaRegija);
+        //rdao.shrani(novaRegija);
+        rdao.dodajRegijo(novaRegija);
+
         novaRegija=new Regija();
     }
 
     public void izbrisiRegijo(Regija r) throws Exception {
         log.info("deleteRegija");
-        rdao.izbrisi(r.getId());
+        //rdao.izbrisi(r.getId());
+        rdao.izbrisiRegijo(r);
     }
 
     public void updateRegija(Regija r) throws Exception {
         log.info("updateRegija");
-        rdao.shrani(r);
+        //rdao.shrani(r);
+        rdao.urediRegijo(r);
     }
 
     // Dnevni podatek ------------------------------
@@ -57,19 +61,19 @@ public class MojBean implements Serializable {
     public  Object[] getVsiDnevniPodatki() throws Exception {
         log.info("getVsiDnevniPodatki");
         Calendar d = new GregorianCalendar().getInstance();
-        return dpdao.vrniVseNaDatum((GregorianCalendar)d).entrySet().toArray();
+        return dpdao.getDnevnePodatkeNaDatum(d).entrySet().toArray();
     }
 
     public List<DnevniPodatek> getVsiDnevniPodatkiRegije() throws Exception {
         log.info("getVsiDnevniPodatkiRegije");
-        return dpdao.vrniVseRegije(izbranaRegija.getId());
+        return dpdao.getDnevnePodatkeRegije(izbranaRegija.getRegijaId());
     }
 
     public void dodajDnevniPodatek() throws Exception {
         log.info("dodajDnevniPodatek");
-        dpdao.shrani(novDnevniPodatek);
+        dpdao.dodajDnevniPodatek(novDnevniPodatek, izbranaRegija);
         novDnevniPodatek = new DnevniPodatek();
-        novDnevniPodatek.setRegijaId(this.izbranaRegija.getId());
+        novDnevniPodatek.setRegijaId(this.izbranaRegija.getRegijaId());
     }
 
     public void dodajDnevniPodatekClone(DnevniPodatek dp) throws Exception {
@@ -79,12 +83,12 @@ public class MojBean implements Serializable {
 
     public void izbrisiDnevniPodatek(DnevniPodatek dp) throws Exception {
         log.info("izbrisiDnevniPodatek");
-        dpdao.izbrisi(dp.getId());
+        dpdao.izbrisiDnevniPodatek(dp);
       }
 
     public void updateDnevniPodatek(DnevniPodatek dp) throws Exception {
         log.info("updateDnevniPodatel");
-        dpdao.shrani(dp);
+        dpdao.urediDnevniPodatek(dp);
     }
 
     //Setters & Getters - Regija
@@ -103,7 +107,7 @@ public class MojBean implements Serializable {
 
     public void setIzbranaRegija(Regija izbranaRegija) {
         this.izbranaRegija = izbranaRegija;
-        this.novDnevniPodatek.setRegijaId(this.izbranaRegija.getId());
+        this.novDnevniPodatek.setRegijaId(this.izbranaRegija.getRegijaId());
     }
 
 

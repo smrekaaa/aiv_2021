@@ -21,7 +21,7 @@ dependencies {
     compileOnly('javax:javaee-api:8.0.1')
     compileOnly('org.slf4j:slf4j-api:1.7.30')
 
-
+    //compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '4.3.11.Final'
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")

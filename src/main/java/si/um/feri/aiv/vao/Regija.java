@@ -4,15 +4,20 @@ import si.um.feri.aiv.patterns.observers.Opazovalec;
 import si.um.feri.aiv.patterns.observers.UrejenDnevniPodatek;
 import si.um.feri.aiv.patterns.observers.UrejenaRegija;
 
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Named("regija")
+@SessionScoped
+@Entity(name = "regija")
 public class Regija implements Serializable {
 
-
     public Regija(int id, String naziv, String imeSkrbnika, String priimekSkrbnika, String emailSkrbnika, int stPrebivalcev) {
-        this.id = id;
+        this.regijaId = id;
         this.naziv = naziv;
         this.imeSkrbnika = imeSkrbnika;
         this.priimekSkrbnika = priimekSkrbnika;
@@ -41,7 +46,7 @@ public class Regija implements Serializable {
         this.registrirajOpazovalcaZaNovDnevniPodatek(new NovDnevniPodatekMail());
     };
 
-    private int id;
+    private int regijaId;
 
     private String naziv;
 
@@ -93,12 +98,15 @@ public class Regija implements Serializable {
     }
 
     //Setters&Getters
-    public int getId() {
-        return id;
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    public int getRegijaId() {
+        return regijaId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setRegijaId(int id) {
+        this.regijaId = id;
     }
 
     public String getNaziv() {
@@ -141,6 +149,7 @@ public class Regija implements Serializable {
         this.stPrebivalcev = stPrebivalcev;
     }
 
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     public List<DnevniPodatek> getDnevniPodatki() {
         return dnevniPodatki;
     }
@@ -154,7 +163,7 @@ public class Regija implements Serializable {
     @Override
     public String toString() {
         return "Regija{" +
-                "id=" + id +
+                "id=" + regijaId +
                 ", naziv='" + naziv + '\'' +
                 ", imeSkrbnika='" + imeSkrbnika + '\'' +
                 ", priimekSkrbnika='" + priimekSkrbnika + '\'' +

@@ -1,3 +1,4 @@
+/*
 package si.um.feri.aiv.ejb;
 
 import si.um.feri.aiv.vao.DnevniPodatek;
@@ -5,16 +6,14 @@ import si.um.feri.aiv.vao.Regija;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
-import javax.print.attribute.standard.DateTimeAtCompleted;
 import java.sql.*;
 import java.util.*;
-import java.util.Date;
 
 @Stateless
-@Local(DnevniPodatekDao.class)
-public class DnevniPodatekDao extends Dao<DnevniPodatek> implements DnevniPodatki {
+@Local(DnevniPodatekDao2.class)
+public class DnevniPodatekDao2 extends Dao<DnevniPodatek> implements DnevniPodatki {
 
-    public DnevniPodatekDao() throws SQLException {
+    public DnevniPodatekDao2() throws SQLException {
         super("java:/PostgresDS",
                 "CREATE TABLE  IF NOT EXISTS dnevni_podatek (\n" +
                         "\tdnevni_podatek_id SERIAL PRIMARY KEY,\n" +
@@ -29,17 +28,17 @@ public class DnevniPodatekDao extends Dao<DnevniPodatek> implements DnevniPodatk
                         ");");
     }
 
-    private static DnevniPodatekDao inst;
+    private static DnevniPodatekDao2 inst;
 
     static {
         try {
-            inst = new DnevniPodatekDao();
+            inst = new DnevniPodatekDao2();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
-    public static DnevniPodatekDao getInstance() {
+    public static DnevniPodatekDao2 getInstance() {
         return inst;
     }
 
@@ -70,7 +69,7 @@ public class DnevniPodatekDao extends Dao<DnevniPodatek> implements DnevniPodatk
         log.info("DAO: shranjujem/urejam dnevni Podatek");
         if (obj == null) return;
 
-        Regija r = RegijaDao.getInstance().najdi(obj.getRegijaId());
+        Regija r = RegijaDao2.getInstance().najdi(obj.getRegijaId());
 
         if (najdi(obj.getId()) != null) {
             PreparedStatement ps = conn.prepareStatement("update dnevni_podatek set okuzeni=? , hospitalizirani=? , testirani=? where dnevni_podatek_id=?");
@@ -193,3 +192,4 @@ public class DnevniPodatekDao extends Dao<DnevniPodatek> implements DnevniPodatk
         rs.close();
     }
 }
+*/

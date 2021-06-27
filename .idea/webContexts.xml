@@ -5,6 +5,7 @@
       <map>
         <entry key="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/template/template.xhtml" value="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/template" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/dodajRegijo.xhtml" value="file://$PROJECT_DIR$/src/main/webapp" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/urediDnevniPodatek.xhtml" value="file://$PROJECT_DIR$/src/main/webapp" />
       </map>
     </option>
   </component>

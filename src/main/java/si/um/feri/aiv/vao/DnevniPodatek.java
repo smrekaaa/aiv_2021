@@ -1,4 +1,7 @@
 package si.um.feri.aiv.vao;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
@@ -6,6 +9,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+@Named("dnevni_podatek")
+@SessionScoped
+@Entity(name = "dnevni_podatek")
 public class DnevniPodatek implements Serializable, Cloneable {
 
     public DnevniPodatek(int okuzeni, int hospitalizirani, int testirani, GregorianCalendar datum) {
@@ -43,6 +49,8 @@ public class DnevniPodatek implements Serializable, Cloneable {
 
     // Setters & Getters
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     public int getId() {
         return id;
     }
@@ -79,7 +87,7 @@ public class DnevniPodatek implements Serializable, Cloneable {
         return datum;
     }
 
-    public void setDatum(GregorianCalendar datum) {
+    public void setDatum(Calendar datum) {
         this.datum = datum;
     }
 
@@ -110,4 +118,5 @@ public class DnevniPodatek implements Serializable, Cloneable {
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+
 }

@@ -1,6 +1,6 @@
+/*
 package si.um.feri.aiv.ejb;
 
-import si.um.feri.aiv.vao.DnevniPodatek;
 import si.um.feri.aiv.vao.Regija;
 
 import javax.ejb.Local;
@@ -12,17 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
-@Local(RegijaDao.class)
-public class RegijaDao extends Dao<Regija> implements Regije{
+@Local(RegijaDao2.class)
+public class RegijaDao2 extends Dao<Regija> implements Regije{
 
-    public RegijaDao() {
+    public RegijaDao2() {
         super("java:/PostgresDS",
                 "create table if not exists regija(regija_id serial primary key,naziv varchar (90) unique not null,ime_skrbnika varchar (90) not null,priimek_skrbnika varchar (90) not null,email_skrbnika varchar (90) unique not null,st_prebivalcev int not null);");
     }
 
-    private static RegijaDao inst = new RegijaDao();
+    private static RegijaDao2 inst = new RegijaDao2();
 
-    public static RegijaDao getInstance() {
+    public static RegijaDao2 getInstance() {
         return inst;
     }
 
@@ -117,3 +117,4 @@ public class RegijaDao extends Dao<Regija> implements Regije{
     }
 
 }
+*/
