@@ -13,8 +13,8 @@ public class Mail {
         System.out.println("SENDING EMAIL");
         textMessage = textMessage + "\n \n  http://localhost:8080/OsebeDemoIJ-1.0-SNAPSHOT/faces/vseRegije.xhtml" ;
 
-        final String username = "delovnim@gmail.com";
-        final String password = "d3l0vn1M41l";
+        final String username = "";
+        final String password = "";
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
